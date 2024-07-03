@@ -32,3 +32,30 @@ node_modules/
 /httpRequests/
 /dataSources/
 /dataSources.local.xml
+
+# Ignore all Docker related files and directories
+
+# Docker Compose files
+docker-compose.yml
+docker-compose.yaml
+docker-compose.override.yml
+docker-compose.override.yaml
+
+# Docker configuration files
+.dockerignore
+.dockerconfig.json
+.dockerignore
+
+# Docker related directories
+.docker/
+docker/
+
+# Docker volumes
+docker-volume/
+
+# Docker logs
+*.log
+
+# Ignore Dockerfiles and docker-compose examples
+Dockerfile*
+docker-compose*.yml

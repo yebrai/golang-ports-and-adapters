@@ -2,12 +2,12 @@ package handlers
 
 import (
 	"encoding/json"
-	"golang-ports-and-adapters/internal/core/domain"
-	"golang-ports-and-adapters/internal/core/services"
 	"net/http"
 	"strconv"
 
 	"github.com/gorilla/mux"
+	"golang-ports-and-adapters/internal/core/domain"
+	"golang-ports-and-adapters/internal/core/services"
 )
 
 type TodoHandler struct {
