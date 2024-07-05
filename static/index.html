@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todo List</title>
+    <style>
+        body { font-family: Arial, sans-serif; }
+        .todo { margin-bottom: 10px; }
+        .todo input { margin-right: 10px; }
+    </style>
+</head>
+<body>
+<h1>Todo List</h1>
+<form id="todo-form">
+    <input type="text" id="todo-title" placeholder="Enter todo title">
+    <button type="submit">Add Todo</button>
+</form>
+<div id="todos"></div>
+
+<script>
+    document.getElementById('todo-form').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const title = document.getElementById('todo-title').value;
+        const response = await fetch('/todo/create', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ title, status: 'Pending' })
+        });
+        const todo = await response.json();
+        addTodoToList(todo);
+        document.getElementById('todo-title').value = '';
+    });
+
+    function addTodoToList(todo) {
+        const todoDiv = document.createElement('div');
+        todoDiv.classList.add('todo');
+        todoDiv.innerHTML = `
+                <span>${todo.title} - ${todo.status}</span>
+                <button onclick="editTodoStatus(${todo.id})">Edit</button>
+            `;
+        document.getElementById('todos').appendChild(todoDiv);
+    }
+
+    async function editTodoStatus(id) {
+        const response = await fetch('/todo/edit', {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ id, status: 'Completed' })
+        });
+        const todo = await response.json();
+        document.querySelector(`.todo[data-id="${id}"] span`).textContent = `${todo.title} - ${todo.status}`;
+    }
+</script>
+</body>
+</html>
