@@ -43,6 +43,9 @@ func main() {
 	r.HandleFunc("/todo/edit", todoHandler.UpdateTodoHandler).Methods("PUT")
 	r.HandleFunc("/todo/{id:[0-9]+}", todoHandler.GetTodoHandler).Methods("GET")
 
+	//templates
+	r.PathPrefix("/").Handler(http.FileServer(http.Dir("./static/")))
+
 	log.Println("Server started at :8080")
 	log.Fatal(http.ListenAndServe(":8080", r))
 }
